@@ -1,0 +1,27 @@
+{
+  "name": "priotti-concept",
+  "version": "1.0.0",
+  "description": "Tienda de Indumetaria Femenina",
+  "main": "index.js",
+  "scripts": {
+    "test": "\"mocha \\\"test/**/*.test.js\\\" --timeout 10000\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/EricBayona/Priotti-Concept.git"
+  },
+  "keywords": [
+    "Ropa",
+    "Femenina",
+    "Moda",
+    "Fashon",
+    "Tucuman",
+    "Aguilares"
+  ],
+  "author": "Eric B.",
+  "license": "Unlicense",
+  "bugs": {
+    "url": "https://github.com/EricBayona/Priotti-Concept/issues"
+  },
+  "homepage": "https://github.com/EricBayona/Priotti-Concept#readme"
+}
