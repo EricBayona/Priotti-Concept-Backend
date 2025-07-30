@@ -3,8 +3,11 @@
   "version": "1.0.0",
   "description": "Tienda de Indumetaria Femenina",
   "main": "index.js",
+  "type": "module",
   "scripts": {
-    "test": "\"mocha \\\"test/**/*.test.js\\\" --timeout 10000\""
+    "start": "cross-env NODE_ENV=production node ./src/app.js",
+    "dev": "cross-env NODE_ENV=development nodemon ./src/app.js",
+    "test": "mocha \"test/**/*.test.js\" --timeout 10000"
   },
   "repository": {
     "type": "git",
@@ -23,5 +26,26 @@
   "bugs": {
     "url": "https://github.com/EricBayona/Priotti-Concept/issues"
   },
-  "homepage": "https://github.com/EricBayona/Priotti-Concept#readme"
+  "homepage": "https://github.com/EricBayona/Priotti-Concept#readme",
+  "dependencies": {
+    "bcrypt": "^6.0.0",
+    "cookie-parser": "^1.4.7",
+    "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
+    "dotenv": "^17.0.0",
+    "express": "^5.1.0",
+    "jsonwebtoken": "^9.0.2",
+    "mongoose": "^8.16.1",
+    "mongoose-paginate-v2": "^1.9.1",
+    "multer": "^2.0.2",
+    "passport": "^0.7.0",
+    "passport-jwt": "^4.0.1",
+    "passport-local": "^1.0.0",
+    "uuid": "^11.1.0",
+    "winston": "^3.17.0",
+    "zod": "^3.25.67"
+  },
+  "devDependencies": {
+    "nodemon": "^3.1.10"
+  }
 }

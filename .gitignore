@@ -1,0 +1,39 @@
+# Node.js
+node_modules/
+npm-debug.log*
+yarn-debug.log*
+yarn-error.log*
+package-lock.json
+yarn.lock
+
+# Environment files
+.env
+.env.*
+
+# Logs
+logs/
+*.log
+
+# OS files
+.DS_Store
+Thumbs.db
+
+# Build output
+dist/
+build/
+out/
+
+# IDEs
+.vscode/
+.idea/
+*.sublime-workspace
+*.sublime-project
+
+# Misc
+*.local
+*.cache
+*.tmp
+
+# Ignora el contenido de products, pero mantiene la carpeta
+/public/images/products/*
+!/public/images/products/README.md
