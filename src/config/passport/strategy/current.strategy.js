@@ -1,6 +1,6 @@
 import passport from "passport";
 import { Strategy as JwtStrategy, ExtractJwt } from "passport-jwt";
-import envsConfig from "../../envs.config.js";
+import { envsConfig } from "../../envs.config.js";
 import { userService } from "../../../services/userService.js";
 
 

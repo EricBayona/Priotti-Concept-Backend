@@ -1,4 +1,5 @@
 import { cartService } from "../services/cart.service.js"
+import { sendEmail } from "../services/email.serivce.js";
 import { logger } from "../utils/logger.js";
 
 const getAllCarts = async (req, res) => {
@@ -46,6 +47,7 @@ const addProductToCart = async (req, res) => {
     const { cid, pid } = req.params;
     try {
         const cartupdate = await cartService.addProduct(cid, pid);
+        logger.info(`POST /carts/${cid} - addProductToCart ok`);
         res.send({ status: "success", payload: cartupdate })
     } catch (error) {
         if (error.message === "Product not found") {
@@ -62,6 +64,7 @@ const deleteProductToCart = async (req, res) => {
     const { cid, pid } = req.params;
     try {
         const cartUpdate = await cartService.deleteProduct(cid, pid);
+        logger.info(`DELETE /carts/${cid} - deleteProductToCart ok`);
         res.send({ status: "success", payload: cartUpdate })
 
     } catch (error) {
@@ -80,10 +83,11 @@ const updateQuantityProductInCart = async (req, res) => {
     const { quantity } = req.body;
     try {
         const cartUpdate = await cartService.updateQuantityProductInCart(cid, pid, quantity);
+        logger.info(`PUT /carts/${cid} -updateQuantityProductInCart ok`);
         res.send({ status: "success", payload: cartUpdate })
     } catch (error) {
         if (error.message === "Product not found in cart") {
-            logger.warn(`Post/carts/${cid} - ${error.message}`);
+            logger.warn(`PUT/carts/${cid} - ${error.message}`);
             res.status(404).json({ status: "error", message: error.message });
             return;
         }
@@ -96,6 +100,7 @@ const clearCartProduct = async (req, res) => {
     const { cid } = req.params;
     try {
         const clearCart = await cartService.clearCartProduct(cid);
+        logger.info(`DELETE/carts/${cid} -clearCartProduct ok`);
         res.send({ status: "success", message: "Empty cart", payload: clearCart })
 
     } catch (error) {
@@ -158,11 +163,30 @@ const replaceCart = async (req, res) => {
     };
 };
 
+const sendPurchaseEmail = async (userEmail, ticketData) => {
+    const htmlContent = `
+    <h2>¡Gracias por tu compra!</h2>
+    <p>Este es tu ticket: <strong>${ticketData.code}</strong></p>
+    <p>Monto: $${ticketData.amount}</p>
+    <p>Fecha: ${ticketData.purchase_datetime}</p>
+  `;
+
+    await sendEmail({
+        to: userEmail,
+        subject: "Confirmación de compra",
+        html: htmlContent,
+    });
+};
+
 const purchaseCart = async (req, res) => {
     const { cid } = req.params;
     const email = req.user.email;
     try {
         const result = await cartService.purchaseCart(cid, email);
+
+
+
+        await sendPurchaseEmail(email, result.ticket);
         res.status(200).json({ status: "success", message: "Purchase completed", payload: result })
 
     } catch (error) {
@@ -185,4 +209,5 @@ export default {
     createCart,
     replaceCart,
     purchaseCart,
+    sendPurchaseEmail,
 };

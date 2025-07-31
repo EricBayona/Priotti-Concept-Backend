@@ -1,5 +1,5 @@
 import mongoose from 'mongoose';
-import envsConfig from './envs.config.js';
+import { envsConfig } from './envs.config.js';
 import { logger } from '../utils/logger.js';
 
 

@@ -1,7 +1,6 @@
 import { UserResponseDto } from "../dto/userResponse.dto.js";
 import Users from "../presistencia/dao/Users.dao.js";
 import AuthRepository from "../repository/Auth.repository.js";
-import { comparePassword, hasPassword } from "../utils/hasPassword.js";
 import { createToken } from "../utils/jwt.js";
 
 const repository = new AuthRepository(new Users());

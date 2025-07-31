@@ -1,7 +1,8 @@
+
 import express from 'express';
 import cookieParser from 'cookie-parser';
 import { connectMongoDB } from './config/mongoDb.config.js';
-import envsConfig from './config/envs.config.js';
+import { envsConfig } from './config/envs.config.js';
 import router from './routes/router.routes.js';
 import { logger, middlewareLogger } from './utils/logger.js';
 import { errorHandler } from './middlewares/errorHandler.middlewares.js';

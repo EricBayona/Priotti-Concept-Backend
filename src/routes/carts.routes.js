@@ -2,7 +2,6 @@ import { Router } from "express";
 import { passportCall } from "../middlewares/passporCall.middleware.js";
 import { authRole } from "../middlewares/authRole.middleware.js";
 import cartController from "../controller/cart.controller.js";
-import { authSelfOrRole } from "../middlewares/authSelfOrRole.middleware.js";
 import { authCartOwner } from "../middlewares/authCartOwner.middleware.js";
 import { validateParamsObjectId } from "../middlewares/validateParamsObjectId.middleware.js";
 import { validateSchema } from "../middlewares/validateSchema.middleware.js";
@@ -16,7 +15,7 @@ router.get("/", passportCall("jwt"), authRole(["admin"]), cartController.getAllC
 
 router.get("/mycart", passportCall("jwt"), authRole(["user", "admin"]), cartController.getMyCart);
 
-router.get("/:cid", passportCall("jwt"), authSelfOrRole(["admin"]), validateParamsObjectId("cid"), cartController.getCartId);
+router.get("/:cid", passportCall("jwt"), authCartOwner, validateParamsObjectId("cid"), cartController.getCartId);
 
 router.post("/:cid/product/:pid", passportCall("jwt"), validateParamsObjectId("cid", "pid"), authCartOwner, cartController.addProductToCart);
 

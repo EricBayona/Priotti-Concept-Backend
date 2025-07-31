@@ -1,7 +1,10 @@
 export const authSelfOrRole = (roles) => {
     return (req, res, next) => {
         try {
+
             if (!req.user) return res.status(400).json({ status: "error", msg: "Unauthorized" });
+
+
             if (req.user._id?.toString() === req.params.uid) return next();
             if (roles.includes(req.user.role)) return next();
 
