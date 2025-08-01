@@ -132,12 +132,13 @@ class CartService {
 
             await this.repository.update(cid, { products: cart.products });
         };
+        const ticketSuccess = ticket && ticket.code;
         return {
-            status: "success",
-            message: ticket
+            status: ticketSuccess ? "success" : "error",
+            message: ticketSuccess
                 ? `Compra finalizada. Ticket generado con código: ${ticket.code}`
                 : "No se pudo generar ticket, sin stock suficiente.",
-            ticket,
+            ticket: ticketSuccess ? ticket : "No se pudo generar ticket, sin stock suficiente.",
             productsPurchased,
             productsOutOfStock,
         };

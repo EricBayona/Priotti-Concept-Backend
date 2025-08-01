@@ -4,6 +4,8 @@ import { registerSchema } from "../schemas/register.schema.js";
 import { passportCall } from "../middlewares/passporCall.middleware.js";
 import { authController } from "../controller/auth.controller.js";
 import { loginSchema } from "../schemas/login.schema.js";
+import { validateNewPassword } from "../schemas/validateNewPassword.schema.js";
+import { validateEmail } from "../schemas/validateEmail.schema.js";
 
 
 const router = Router();
@@ -16,4 +18,10 @@ router.get("/current", passportCall("jwt"), authController.current);
 
 router.get("/logout", passportCall("jwt"), authController.logout);
 
-export default router;
+router.post("/forgot-password", validateSchema({ body: validateEmail }), authController.forgotPassword);
+
+router.post("/reset-password/:token", validateSchema({ body: validateNewPassword }), authController.resetPassword);
+
+
+
+export default router; 

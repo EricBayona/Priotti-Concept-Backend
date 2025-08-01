@@ -39,6 +39,10 @@ class UserService {
     async delete(userId) {
         return this.repository.delete(userId);
     };
+
+    async updatePassword(userId, newPassword) {
+        return await this.repository.findByIdUpdate(userId, newPassword);
+    };
 };
 
 export const userService = new UserService(repository);

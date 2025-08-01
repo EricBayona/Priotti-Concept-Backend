@@ -22,4 +22,8 @@ export default class Users {
         return userModel.findByIdAndDelete(id);
     };
 
+    findByIdUpdate = (userId, newPassword) => {
+        return userModel.findByIdAndUpdate(userId, newPassword);
+    }
+
 };

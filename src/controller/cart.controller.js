@@ -164,6 +164,7 @@ const replaceCart = async (req, res) => {
 };
 
 const sendPurchaseEmail = async (userEmail, ticketData) => {
+
     const htmlContent = `
     <h2>¡Gracias por tu compra!</h2>
     <p>Este es tu ticket: <strong>${ticketData.code}</strong></p>
@@ -183,10 +184,12 @@ const purchaseCart = async (req, res) => {
     const email = req.user.email;
     try {
         const result = await cartService.purchaseCart(cid, email);
-
-
-
-        await sendPurchaseEmail(email, result.ticket);
+        if (!result.ticket.code) {
+            logger.info("No se pudo generar ticket, sin stock suficiente.")
+        } else {
+            logger.info("email enviado")
+            await sendPurchaseEmail(email, result.ticket);
+        };
         res.status(200).json({ status: "success", message: "Purchase completed", payload: result })
 
     } catch (error) {

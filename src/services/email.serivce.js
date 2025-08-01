@@ -8,8 +8,8 @@ if (environment === "production") {
     transporter = nodemailer.createTransport({
         service: "gmail",
         auth: {
-            user: "ericjf.bayona@gmail.com",
-            pass: "nfhzugurrdillfwt",
+            user: envsConfig.MAIL_USER,
+            pass: envsConfig.MAIL_PASS,
         },
     });
 } else {
