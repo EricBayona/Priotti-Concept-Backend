@@ -126,6 +126,7 @@ class CartService {
                 purchase_datetime: new Date(),
                 amount: totalAmount,
                 purchaser: purchaseEmail,
+                products: productsPurchased,
             });
 
             cart.products = cart.products.filter(item => !productsPurchased.find(p => p.product.toString() === item.product._id.toString()));

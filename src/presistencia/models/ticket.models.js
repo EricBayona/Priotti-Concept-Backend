@@ -18,6 +18,20 @@ const ticketSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
+    products: [
+        {
+            product: {
+                type: mongoose.Schema.Types.ObjectId,
+                ref: "product", // nombre del modelo de productos
+                required: true,
+            },
+            quantity: {
+                type: Number,
+                required: true,
+                min: 1,
+            }
+        }
+    ],
 }, { timestamps: true });
 
 export const ticketModel = mongoose.model('Ticket', ticketSchema);

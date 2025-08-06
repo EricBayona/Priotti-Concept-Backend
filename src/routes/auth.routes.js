@@ -23,5 +23,4 @@ router.post("/forgot-password", validateSchema({ body: validateEmail }), authCon
 router.post("/reset-password/:token", validateSchema({ body: validateNewPassword }), authController.resetPassword);
 
 
-
 export default router; 

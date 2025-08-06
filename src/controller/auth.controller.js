@@ -94,7 +94,7 @@ class AuthController {
             logger.error(error);
             res.status(500).json({ status: "error", message: "Internal Server Error" });
         }
-    }
+    };
 }
 
 export const authController = new AuthController();

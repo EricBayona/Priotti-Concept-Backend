@@ -27,7 +27,7 @@ const getTicketById = async (req, res) => {
 };
 
 const getTicketByUser = async (req, res) => {
-    const { email } = req.params;
+    const email = req.user.email;
     try {
         const ticket = await ticketService.getTicketByUser(email);
         res.status(200).json({ status: "success", payload: ticket });
@@ -35,9 +35,12 @@ const getTicketByUser = async (req, res) => {
         logger.error(`Error en Get/tickets - ${error.message}\n${error.stack}`);
         res.status(500).json({ status: "error", message: "Internal Server Error" });
     };
-}
+};
+
+
+
 export default {
     getAllTickets,
     getTicketById,
-    getTicketByUser
+    getTicketByUser,
 }

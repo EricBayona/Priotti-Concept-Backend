@@ -4,16 +4,13 @@ import { passportCall } from "../middlewares/passporCall.middleware.js";
 import { authRole } from "../middlewares/authRole.middleware.js";
 import { validateParamsObjectId } from "../middlewares/validateParamsObjectId.middleware.js";
 import { authorizeTicketOwner } from "../middlewares/autorizeTicketOwner.middleware.js";
-import { authorizeUserByEmail } from "../middlewares/authorizeUserByEmail.middleware.js";
-
-
 
 const router = Router();
 
 router.get("/", passportCall("jwt"), authRole(["admin"]), ticketControler.getAllTickets);
 
-router.get("/:tid", passportCall("jwt"), validateParamsObjectId("tid"), authorizeTicketOwner, ticketControler.getTicketById);
+router.get("/my", passportCall("jwt"), ticketControler.getTicketByUser);
 
-router.get("/user/:email", passportCall("jwt"), authorizeUserByEmail, ticketControler.getTicketByUser);
+router.get("/:tid", passportCall("jwt"), validateParamsObjectId("tid"), authorizeTicketOwner, ticketControler.getTicketById);
 
 export default router;
