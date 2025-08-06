@@ -8,5 +8,6 @@ const config = () => ({
     JWT_SECRET: process.env.JWT_SECRET || "secret",
     MAIL_USER: process.env.MAIL_USER || "notificaciones@priotticoncep.dev",
     MAIL_PASS: process.env.MAIL_PASS || "CLAVEuser",
+    MP_ACCESS_TOKEN: process.env.MP_ACCESS_TOKEN,
 });
 export const envsConfig = config();

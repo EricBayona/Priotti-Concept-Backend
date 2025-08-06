@@ -23,7 +23,7 @@ class CartService {
     };
     async findCartById(cid) {
         const cart = await this.repository.getById(cid);
-        return cart
+        return cart.populate("products.product")
     };
     async addProduct(cid, pid) {
         const cart = await this.repository.getById(cid);

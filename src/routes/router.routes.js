@@ -5,6 +5,7 @@ import productRouter from "./products.routes.js";
 import cartRouter from "./carts.routes.js";
 import ticketRouter from "./tickets.routes.js";
 import statsRouter from "./stats.routes.js";
+import paymentRouter from "./payments.routes.js";
 
 const router = Router();
 
@@ -14,5 +15,6 @@ router.use("/products", productRouter);
 router.use("/carts", cartRouter);
 router.use("/tickets", ticketRouter);
 router.use("/stats", statsRouter);
+router.use("/payment", paymentRouter);
 
 export default router;
