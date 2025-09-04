@@ -1,0 +1,73 @@
+paths:
+  /payment/{cid}:
+    post:
+      summary: Crear un pago para un carrito
+      tags:
+        - Payments
+      parameters:
+        - in: path
+          name: cid
+          required: true
+          schema:
+            type: string
+          description: ID del carrito a pagar
+      requestBody:
+        required: false
+        content:
+          application/json:
+            schema:
+              type: object
+              properties:
+                payment_method:
+                  type: string
+                  example: "mercadopago"
+      responses:
+        "200":
+          description: Pago generado correctamente
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  status:
+                    type: string
+                    example: "success"
+                  payment_id:
+                    type: string
+                    example: "MP-123456789"
+                  amount:
+                    type: number
+                    example: 15200.50
+                  currency:
+                    type: string
+                    example: "ARS"
+                  ticket:
+                    $ref: "#/components/schemas/Ticket"
+        "400":
+          description: Error en los datos del pago o carrito vacío
+        "404":
+          description: Carrito no encontrado
+        "500":
+          description: Error interno del servidor
+
+components:
+  schemas:
+    Ticket:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: "64a1b1d5f1a3e2c456789012"
+        code:
+          type: string
+          example: "TCK-20230815-12345"
+        purchase_datetime:
+          type: string
+          format: date-time
+          example: "2025-08-15T10:23:45.678Z"
+        amount:
+          type: number
+          example: 15200.50
+        purchaser:
+          type: string
+          example: "user@mail.com"

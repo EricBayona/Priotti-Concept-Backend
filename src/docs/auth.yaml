@@ -1,0 +1,188 @@
+tags:
+  - name: Auth
+    description: Endpoints de autenticación y gestión de usuarios
+
+paths:
+  /auth/register:
+    post:
+      summary: Registrar un nuevo usuario
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - first_name
+                - last_name
+                - email
+                - birthDate
+                - password
+              properties:
+                first_name:
+                  type: string
+                  example: Juan
+                last_name:
+                  type: string
+                  example: Pérez
+                birthDate:
+                  type: string
+                  example: 1999-01-01
+                email:
+                  type: string
+                  example: juanperez@mail.com
+                password:
+                  type: string
+                  example: Contr4señ#
+      responses:
+        "201":
+          description: Usuario registrado correctamente
+        "400":
+          description: Error de validación
+        "500":
+          description: Error interno del servidor
+
+  /auth/login:
+    post:
+      summary: Iniciar sesión de usuario
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+                - password
+              properties:
+                email:
+                  type: string
+                  example: juanperez@mail.com
+                password:
+                  type: string
+                  example: 123456
+      responses:
+        "200":
+          description: Login exitoso
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  token:
+                    type: string
+                    example: eyJhbGciOiJIUzI1NiIsInR5cCI6...
+        "401":
+          description: Credenciales inválidas
+        "500":
+          description: Error interno del servidor
+
+  /auth/current:
+    get:
+      summary: Obtener usuario autenticado
+      security:
+        - bearerAuth: []
+      tags:
+        - Auth
+      responses:
+        "200":
+          description: Usuario autenticado
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  success:
+                    type: boolean
+                    example: true
+                  user:
+                    type: object
+                    properties:
+                      id:
+                        type: string
+                        example: 64fc5e3f1eabc1234d567890
+                      email:
+                        type: string
+                        example: juanperez@mail.com
+                      role:
+                        type: string
+                        example: user
+        "401":
+          description: Token inválido o expirado
+
+  /auth/logout:
+    get:
+      summary: Cerrar sesión del usuario
+      security:
+        - bearerAuth: []
+      tags:
+        - Auth
+      responses:
+        "200":
+          description: Sesión cerrada correctamente
+        "401":
+          description: Token inválido
+
+  /auth/forgot-password:
+    post:
+      summary: Enviar correo para restablecer contraseña
+      tags:
+        - Auth
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - email
+              properties:
+                email:
+                  type: string
+                  example: juanperez@mail.com
+      responses:
+        "200":
+          description: Correo enviado si el email existe
+        "400":
+          description: Email inválido
+        "500":
+          description: Error interno del servidor
+
+  /auth/reset-password/{token}:
+    post:
+      summary: Restablecer contraseña usando token
+      tags:
+        - Auth
+      parameters:
+        - name: token
+          in: path
+          required: true
+          schema:
+            type: string
+          description: Token recibido en el correo de recuperación
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - password
+              properties:
+                password:
+                  type: string
+                  example: nuevaPassword123
+      responses:
+        "200":
+          description: Contraseña actualizada correctamente
+        "400":
+          description: Token inválido o expirado
+        "500":
+          description: Error interno del servidor

@@ -26,7 +26,10 @@ class AuthService {
         return new UserResponseDto(userDto);
     };
     async current(user, token) {
-        const userDto = new UserResponseDto(user)
+        if (!user || !user._id) {
+            return { message: "Usuario inválido o no logueado" };
+        }
+        const userDto = new UserResponseDto(user);
         return {
             message: "You are logged in",
             user: userDto,

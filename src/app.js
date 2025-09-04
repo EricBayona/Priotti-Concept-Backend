@@ -7,6 +7,7 @@ import router from './routes/router.routes.js';
 import { logger, middlewareLogger } from './utils/logger.js';
 import { errorHandler } from './middlewares/errorHandler.middlewares.js';
 import passport from './config/passport/index.js';
+import { swaggerSpec, swaggerUi } from './config/swagger.config.js';
 
 
 const app = express();
@@ -20,6 +21,7 @@ app.use(cookieParser());
 app.use(passport.initialize());
 app.use(middlewareLogger);
 
+app.use("/docs", swaggerUi.serve, swaggerUi.setup(swaggerSpec));
 app.use("/api", router);
 
 app.use((req, res, next) => {

@@ -37,3 +37,7 @@ out/
 # Ignora el contenido de products, pero mantiene la carpeta
 /public/images/products/*
 !/public/images/products/README.md
+
+
+#Tests
+test/

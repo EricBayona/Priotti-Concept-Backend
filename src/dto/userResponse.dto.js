@@ -1,5 +1,6 @@
 export class UserResponseDto {
     constructor(user) {
+        this._id = user._id;
         this.fullName = `${user.first_name} ${user.last_name}`;
         this.email = user.email;
         this.age = this.calculateAge(user.birthDate);

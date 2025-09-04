@@ -21,27 +21,36 @@ class AuthController {
             res.status(200).json({ status: "ok", user, token });
         } catch (error) {
             logger.error("Login error", error);
-            res.status(401).json({ stattus: "error", message: "Email or password is incorrect" });
+            res.status(401).json({
+                stattus: "error",
+                message: "Credenciales inválidas. Verificá tu email y contraseña"
+            });
         }
     };
 
     async register(req, res) {
         try {
-            const user = await authService.register(req.body);
-            res.status(201).json({ message: user });
+            const user = await authService.register(req.user);
+            res.status(201).json({ status: "ok", user });
         } catch (error) {
             logger.error("Register error:", error);
-            res.status(500).json({ status: "error", message: "Error en el registro" });
+            res.status(500).json({
+                status: "error",
+                message: "No se pudo completar el registro. Intentá más tarde."
+            });
         }
     };
 
     async current(req, res) {
         try {
             const result = await authService.current(req.user, req.cookies.token);
-            res.status(200).json(result);
+            res.status(200).json({ status: "ok", user: result });
         } catch (error) {
-            logger.error(error);
-            res.status(500).json({ status: "error", message: "Internal Server Error" });
+            logger.error("Current user error:", error);
+            res.status(500).json({
+                status: "error",
+                message: "No se pudo obtener el usuario actual."
+            });
         }
     };
 
@@ -49,10 +58,13 @@ class AuthController {
         try {
             const result = await authService.logout();
             res.clearCookie("token");
-            res.status(200).json(result);
+            res.status(200).json({ status: "ok", message: "Sesión cerrada correctamente." });
         } catch (error) {
-            logger.error(error);
-            res.status(500).json({ status: "error", message: "Internal Server Error" });
+            logger.error("Logout error:", error);
+            res.status(500).json({
+                status: "error",
+                message: "No se pudo cerrar la sesión."
+            });
         }
     };
 
@@ -60,7 +72,7 @@ class AuthController {
         const { email } = req.body;
         try {
             const user = await userService.getUserByEmail(email);
-            if (!user) return res.status(404).json({ message: "User not found" });
+            if (!user) return res.status(404).json({ stattus: "error", message: "No se encontró un usuario con ese email." });
 
             const token = jwt.sign(
                 { email },
@@ -71,10 +83,15 @@ class AuthController {
             const recoveryUrl = `http://localhost:8080/api/auth/reset-password/${token}`;
 
             await sendRecoveryMail(email, recoveryUrl);
-            res.json({ message: "Correo de recuperacion enviado" });
+            res.status(200).json({
+                status: "ok", message: "Correo de recuperacion enviado"
+            });
         } catch (error) {
-            logger.error(error);
-            res.status(500).json({ status: "error", message: "Internal Server Error" });
+            logger.error("Forgot password error:", error);
+            res.status(500).json({
+                status: "error",
+                message: "No se pudo enviar el correo de recuperación."
+            });
         };
     };
 
@@ -84,15 +101,15 @@ class AuthController {
         try {
             const decoded = jwt.verify(token, envsConfig.JWT_SECRET);
             const user = await userService.getUserByEmail(decoded.email);
-            if (!user) return res.status(404).json({ message: "User not found" });
+            if (!user) return res.status(404).json({ stattus: "error", message: "Usuario no encontrado." });
 
             const passaword = hasPassword(newPassword);
             await userService.updatePassword(user._id, passaword);
 
-            res.json({ message: "Contraseña actualizada" });
+            res.status(200).json({ status: "ok", message: "Contraseña actualizada" });
         } catch (error) {
-            logger.error(error);
-            res.status(500).json({ status: "error", message: "Internal Server Error" });
+            logger.error("Reset password error:", error);
+            res.status(500).json({ status: "error", message: "No se pudo actualizar la contraseña." });
         }
     };
 }

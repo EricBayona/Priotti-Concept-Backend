@@ -1,0 +1,63 @@
+paths:
+  /tickets:
+    get:
+      summary: Obtener todos los tickets
+      tags:
+        - Tickets
+      responses:
+        "200":
+          description: Lista de tickets obtenida exitosamente
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: "#/components/schemas/Ticket"
+        "500":
+          description: Error en el servidor
+
+  /tickets/{tid}:
+    get:
+      summary: Obtener ticket por ID
+      tags:
+        - Tickets
+      parameters:
+        - in: path
+          name: tid
+          schema:
+            type: string
+          required: true
+          description: ID del ticket
+      responses:
+        "200":
+          description: Ticket obtenido exitosamente
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/Ticket"
+        "404":
+          description: Ticket no encontrado
+        "500":
+          description: Error en el servidor
+
+components:
+  schemas:
+    Ticket:
+      type: object
+      properties:
+        _id:
+          type: string
+          example: 64a1b1d5f1a3e2c456789012
+        code:
+          type: string
+          example: "TCK-20230815-12345"
+        purchase_datetime:
+          type: string
+          format: date-time
+          example: "2025-08-15T10:23:45.678Z"
+        amount:
+          type: number
+          example: 15200.50
+        purchaser:
+          type: string
+          example: "user@mail.com"

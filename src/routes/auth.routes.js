@@ -20,7 +20,8 @@ router.get("/logout", passportCall("jwt"), authController.logout);
 
 router.post("/forgot-password", validateSchema({ body: validateEmail }), authController.forgotPassword);
 
-router.post("/reset-password/:token", validateSchema({ body: validateNewPassword }), authController.resetPassword);
+// lo comentamos hasta que implementemos un token temporal para cambio de contraseña, es inseguro usar el token de login
+// router.post("/reset-password/:token", validateSchema({ body: validateNewPassword }), authController.resetPassword);
 
 
 export default router; 

@@ -43,11 +43,16 @@
     "passport": "^0.7.0",
     "passport-jwt": "^4.0.1",
     "passport-local": "^1.0.0",
+    "swagger-jsdoc": "^6.2.8",
+    "swagger-ui-express": "^5.0.1",
     "uuid": "^11.1.0",
     "winston": "^3.17.0",
     "zod": "^3.25.67"
   },
   "devDependencies": {
-    "nodemon": "^3.1.10"
+    "chai": "^5.3.1",
+    "mocha": "^10.8.2",
+    "nodemon": "^3.1.10",
+    "supertest": "^7.1.4"
   }
 }
