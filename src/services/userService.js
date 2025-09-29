@@ -1,6 +1,6 @@
 
 import { UserResponseDto } from "../dto/userResponse.dto.js";
-import Users from "../presistencia/dao/Users.dao.js";
+import Users from "../presistencia/dao/users.dao.js";
 import UserRepository from "../repository/user.repository.js";
 import { hasPassword } from "../utils/hasPassword.js";
 
