@@ -2,7 +2,7 @@ import jwt from 'jsonwebtoken';
 import { envsConfig } from '../config/envs.config.js';
 
 export const createToken = (data) => {
-    return jwt.sign(data, envsConfig.JWT_SECRET, { expiresIn: '5m' });
+    return jwt.sign(data, envsConfig.JWT_SECRET, { expiresIn: '5h' });
 };
 
 export const verifyToken = (token) => {

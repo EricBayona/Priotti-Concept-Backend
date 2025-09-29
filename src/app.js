@@ -8,12 +8,12 @@ import { logger, middlewareLogger } from './utils/logger.js';
 import { errorHandler } from './middlewares/errorHandler.middlewares.js';
 import passport from './config/passport/index.js';
 import { swaggerSpec, swaggerUi } from './config/swagger.config.js';
-
+import cors from 'cors';
 
 const app = express();
 
 connectMongoDB();
-
+app.use(cors());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 app.use(express.static("public"));

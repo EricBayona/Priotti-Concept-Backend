@@ -13,9 +13,9 @@ const router = Router();
 
 router.post("/", passportCall("jwt"), authRole(["admin"]), multerUploaderMiddleware.array("thumbnails", 3), validateSchema({ body: createProductSchema }), productControler.createProducts);
 
-router.get("/", passportCall("jwt"), authRole(["admin", "user"]), validateSchema({ query: validateProductQuery }), productControler.getAllProducts);
+router.get("/", validateSchema({ query: validateProductQuery }), productControler.getAllProducts);
 
-router.get("/:pid", passportCall("jwt"), authRole(["admin", "user"]), validateParamsObjectId("pid"), productControler.getByProduct);
+router.get("/:pid", validateParamsObjectId("pid"), productControler.getByProduct);
 
 router.put("/:pid", passportCall("jwt"), authRole(["admin"]), validateSchema({ body: editProductSchema }), validateParamsObjectId("pid"), productControler.updateProduct);
 

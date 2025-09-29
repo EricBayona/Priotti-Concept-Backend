@@ -42,7 +42,6 @@ class StatsService {
         const productMap = {};
 
         for (const ticket of filteredTickets) {
-            console.log(ticket);
 
             const cart = ticket.products || [];
             for (const item of cart) {
