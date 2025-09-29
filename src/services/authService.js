@@ -1,5 +1,5 @@
 import { UserResponseDto } from "../dto/userResponse.dto.js";
-import Users from "../presistencia/dao/Users.dao.js";
+import Users from "../presistencia/dao/users.dao.js";
 import AuthRepository from "../repository/Auth.repository.js";
 import { createToken } from "../utils/jwt.js";
 
